@@ -1,13 +1,13 @@
 # JZX Workspace AGENTS
 
-适用范围：`/Users/ze/JZX`
+适用范围：`/Users/chengzuozheng/Desktop/jzx-workspace`
 
 ## Rule Order
 
 1. 就近子项目 `AGENTS.md`
 2. 子项目 `CLAUDE.md`
 3. 本文件
-4. 工作区记忆文件：`/Users/ze/JZX/JZX_WORKSPACE_MEMORY.md`
+4. 工作区记忆文件：`/Users/chengzuozheng/Desktop/jzx-workspace/JZX_WORKSPACE_MEMORY.md`
 
 ## Must Follow
 
@@ -19,6 +19,7 @@
 - 开发任务拿到 PRD 后，默认走 superpowers 流程
 - 顶层架构文档命名：`xxx_00_Overview_顶层架构`
 - 顶层架构至少覆盖：顶层模块、模块边界关系、新增模块、现有仓库改造范围
+- 工作区产出的文档不要放入具体项目仓库或 `学习笔记`；统一放在 `/Users/chengzuozheng/Desktop/jzx-workspace/doc`，并按 `项目/任务/` 建目录归档
 
 ## Infrastructure Fact Sources
 
@@ -49,7 +50,7 @@
 - `engineering-context` 是上下文 MCP 服务入口，也是跨项目背景资料主来源
 - `engineering-context/skills` 已同步到 `~/.codex/skills`
 - `engineering-context/skills` 也是 superpowers 流程的一部分，开发阶段不能只把它当参考资料，需要按需加载并执行其中约定
-- spec 写作规范入口：`/Users/ze/JZX/engineering-spec-writing-guideline.md`
+- spec 写作规范入口：`/Users/chengzuozheng/Desktop/jzx-workspace/engineering-spec-writing-guideline.md`
 
 ## code-review-graph
 
