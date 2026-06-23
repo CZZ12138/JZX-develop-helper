@@ -1,6 +1,6 @@
 # JZX Workspace Memory
 
-适用范围：`/Users/ze/JZX`
+适用范围：`/Users/chengzuozheng/Desktop/jzx-workspace`
 
 本文件是工作区长期记忆库，保存可复用的经验、规范、设施信息、排障结论和项目上下文。
 
@@ -17,21 +17,35 @@
 
 ## Quick Index
 
-- 工作区规则：`/Users/ze/JZX/AGENTS.md`
-- 基建文档：`/Users/ze/JZX/公司基建_00_Overview_流水线集群日志经验.md`
-- 基建合并版草稿：`/Users/ze/JZX/公司基建_00_Overview_流水线集群日志经验(2).md`
-- spec 写作规范：`/Users/ze/JZX/engineering-spec-writing-guideline.md`
-- 工单排障 skill：`/Users/ze/.codex/skills/jzx-workorder-debugging`
-- 测试集群/bugfix 操作入口：`/Users/ze/JZX/sdd-bugfix`
-- 寒雪观测平台交接：`/Users/ze/JZX/hanxue-observability-platform/HANDOFF_2026-06-17_寒雪观测平台交接.md`
+- 工作区规则：`/Users/chengzuozheng/Desktop/jzx-workspace/AGENTS.md`
+- 基建文档：`/Users/chengzuozheng/Desktop/jzx-workspace/公司基建_00_Overview_流水线集群日志经验.md`
+- 基建合并版草稿：`/Users/chengzuozheng/Desktop/jzx-workspace/公司基建_00_Overview_流水线集群日志经验(2).md`
+- spec 写作规范：`/Users/chengzuozheng/Desktop/jzx-workspace/engineering-spec-writing-guideline.md`
+- 工单排障 skill：`/Users/chengzuozheng/.codex/skills/jzx-workorder-debugging`
+- 测试集群/bugfix 操作入口：`/Users/chengzuozheng/Desktop/jzx-workspace/sdd-bugfix`
+- 寒雪观测平台交接：`/Users/chengzuozheng/Desktop/jzx-workspace/hanxue-observability-platform/HANDOFF_2026-06-17_寒雪观测平台交接.md`
 
 ## Workspace Facts
 
-- JZX 相关开发任务默认在 `/Users/ze/JZX` 工作区下进行
+- JZX 相关开发任务默认在 `/Users/chengzuozheng/Desktop/jzx-workspace` 工作区下进行
+- 工作区级自动加载规则文件：`/Users/chengzuozheng/Desktop/jzx-workspace/AGENTS.md`
 - 若子项目存在更近一级 `AGENTS.md`，其规则优先；若没有，再参考该项目的 `CLAUDE.md`
 - `engineering-context` 是工作区级上下文入口，也是跨项目背景资料主来源
 - `engineering-context/skills` 已同步到 `~/.codex/skills`，开发阶段按需加载并执行其中约定
 - 开发流程默认遵循：需求边界澄清 -> 顶层架构 -> `spec -> plans -> execution`
+
+## Git / Branching Rules
+
+- 个人功能分支需要保持干净，不要为了处理合入 `test` 的冲突而把 `origin/test` merge 回个人功能分支
+- 用户要求“更新远端分支 / 上传同步开发分支”时，默认只推送当前代码分支上已经提交的改动；本地工作文档、spec/overview/plan/summary、`docs/superpowers/` 等未跟踪文档不要自动提交或推送，除非用户明确要求同步这些文档
+- 如果代码变更涉及建表、改表、加字段或索引，合入/部署测试环境时必须同步确认测试库 schema 已变更到位；不要只部署代码而遗漏表结构，否则会影响同一测试环境里的其他人。若自动迁移链路不明确，应显式检查目标测试库字段/表并补齐。
+- 合并个人开发分支到 `test` 如果出现冲突，推荐流程：
+  - 从 `origin/test` 拉一条临时合并分支，命名优先使用 `merge/test-<日期或需求标识>` / `merge/<日期>-merge-into-test`
+  - 在该临时合并分支上 merge 个人功能分支并解决冲突
+  - 默认只推送临时合并分支到远端，由用户在 Codeup 手动提 MR / 合并到 `test`
+  - 除非用户明确说“直接合并/直接推 test”，不要由 Codex 直接推送 `test`
+  - 个人功能分支继续只保留自己的功能提交，避免被 `test` 上的测试代码或其他未发布改动污染
+- 如果误把 `test` merge 到个人功能分支，应先备份污染提交，再将个人功能分支回退到合入 `test` 前的最后一个功能提交；必要时使用 `--force-with-lease` 更新个人远端分支
 
 ## Reusable Prompts
 
@@ -125,7 +139,7 @@
 
 ### Skill
 
-- `jzx-workorder-debugging`：路径 `/Users/ze/.codex/skills/jzx-workorder-debugging`
+- `jzx-workorder-debugging`：路径 `/Users/chengzuozheng/.codex/skills/jzx-workorder-debugging`
 - 用于按工单、SLS 日志、trace/roomId/userId、截图和本地代码证据定位首错点，并输出证据驱动的简洁汇报
 - 使用时先读：
   - `references/sls-config.md`
@@ -201,7 +215,7 @@
 
 ### `poseidon`
 
-- 路径：`/Users/ze/JZX/poseidon`
+- 路径：`/Users/chengzuozheng/Desktop/jzx-workspace/poseidon`
 - Maven 多模块 Java 8 / Spring Boot 2.5.15 项目，父 POM 描述为 `AI双师课`
 - 主启动入口：`jzx-admin/src/main/java/com/jzx/JzxApplication.java`
 - 默认应用名：`poseidon`，默认端口和路径在 `jzx-admin/src/main/resources/bootstrap.properties` 中配置为 `10090`、`/poseidon`
@@ -212,6 +226,8 @@
 ### Hanxue Agent
 
 - `hanxue-edu-agent` 是寒雪对外 OpenAPI 的上游 Agent 服务，不直接面向 RTC 客户端
+- `engineering-context` 中应作为独立服务 `hanxue-edu-agent` 维护，不要套用旧 `hanxue-claw` 的 Dubbo 主入口结论；截至 2026-06-22 已按 `origin/release/20260618_v3` 快照补 README、OpenAPI Runtime、Agent Tools、Observability Runtime 和 task_by_module，记录 Agent Trace Kafka、课程服务任务富化、负一屏任务创建扩展字段与 TTS `audio-setting-format`
+- 远端存在 `test` 分支；若某个本地 worktree 的 `remote.origin.fetch` 只配置了白名单分支，普通 `git fetch` 可能不会生成/更新 `origin/test`，可显式执行 `git fetch origin refs/heads/test:refs/remotes/origin/test`
 - 对外核心接口：
   - `GET /open-api/v1/session-id`
   - `POST /open-api/v1/messages`
@@ -225,13 +241,15 @@
 
 ### Hanxue RTC Bridge
 
-- 整体链路：`ARTC 客户端/RTC 音频/DataChannel -> RTC 桥接服务 -> hanxue-edu-agent(OpenAPI) -> SSE 事件流 -> RTC 桥接服务 -> TTS/RTC 音频 + DataChannel -> ARTC 客户端`
+- 整体链路：`ARTC 客户端/RTC 音频/DataChannel -> jzx-artcManager(HanxueAdapter + HanxueAgentBridgeServiceImpl) -> hanxue-edu-agent(OpenAPI) -> SSE 事件流 -> jzx-artcManager -> TTS/RTC 音频 + DataChannel -> ARTC 客户端`
 - `hanxue-edu-agent` 负责会话态 Agent 编排和标准事件流输出
-- RTC 桥接服务负责寒雪场景桥接：会话建立、SSE 消费、事件翻译、TTS 推流、DataChannel 下发
+- `jzx-artcManager` 负责寒雪场景桥接：会话建立、SSE 消费、事件翻译、TTS 推流、DataChannel 下发
 - 客户端同时消费音频流和结构化业务消息流
+- 寒雪业务入口在 `HanxueAdapter`
 - `upload_material`、`tab_choice` 会被转成文本事件继续发往上游 Agent，不在本地做最终语义决策
 - `exit_scene` 主要关闭本地 SSE，不额外向上游发结束协议
 - `ensureSession` 优先复用旧 `sessionId`，避免 SSE 短断后新建 session 导致上下文、照片、技能激活状态丢失
+- 2026-06-22 更新 `engineering-context/jzx-artcManager`：以远端 `origin/release/20260610` (`45b091aa082af4ba6e3731da904f77b411d15061`) 为最新事实；该 release 包含新板书 `board_control` 总控、`hanxue_call_v2` / `hanxue_call_v3` 路由拆分、`teacher_ready` / `readyId` 编排、预录音频首轮和音频 OSS 留存
 
 SSE 到客户端的真实翻译规则：
 
@@ -241,8 +259,16 @@ SSE 到客户端的真实翻译规则：
 - `speech.start` / `speech.end` 不直接下发给客户端作为主业务事件
 - `speech.delta` 会按文本去重，防止重复播报
 - 同一轮 turn 内多段 `speech.delta` 共享同一个 `turnToken` 和同一条 TTS 流
+- TTS `streamId` 采用 `hx2_speech::sessionId::turnToken` 形式，保证同 turn 内稳定
 - `speech.end` 只是文本片段边界，`turn.done` 才是一轮老师输出的真正闭环边界
+- TTS 流的真正 END 在 `turn.done` 统一发送
 - 判断“老师这一轮是否真的讲完”应看 `turn.done`，不能只看 `speech.end`
+
+Action / 结构化业务指令：
+
+- `action` 事件是结构化客户端指令，不是普通文本
+- 已知上游动作映射包括：`request_photo -> OPEN_MATERIAL_UPLOAD`、`close -> CLOSE_SESSION`、`show_task_card -> SHOW_TASK_CARD`、`show_app_card -> SHOW_APP_CARD`
+- DataChannel 的价值不只是展示文本，而是驱动前端交互和状态机
 
 ### Phoenix / Agent Observability
 
@@ -262,7 +288,7 @@ SSE 到客户端的真实翻译规则：
 
 ### Hanxue Observability Platform
 
-- 平台路径：`/Users/ze/JZX/hanxue-observability-platform`
+- 平台路径：`/Users/chengzuozheng/Desktop/jzx-workspace/hanxue-observability-platform`
 - 测试 namespace deployment：`test-zstt-hanxue-observability-service`、`test-zstt-hanxue-observability-web`
 - Web NodePort 历史值：`31681`
 - 跳板机 `192.168.15.200` 不是 K8s node；访问 NodePort 要用测试网络内集群节点 IP，例如历史记录 `192.168.41.1:31681`
@@ -291,7 +317,7 @@ SLS source：
 - Agent 观测日志关键词：`HANXUE_OBSERVE`
 - task 观测日志关键词：`HANXUE_TASK_OBSERVE`
 - SLS 原始日志主要在 `content` 字段，`COMMON-BASE模型调用日志:` 后是 BurialUtil 外层 JSON，业务 payload 在外层 `inParam` 字符串 JSON 中
-- SLS 清洗 schema：`/Users/ze/JZX/hanxue-observability-prototype/hanxue_data_statistics_11_Schema_SLS观测日志清洗.md`
+- SLS 清洗 schema：`/Users/chengzuozheng/Desktop/jzx-workspace/hanxue-observability-prototype/hanxue_data_statistics_11_Schema_SLS观测日志清洗.md`
 - 不要把 SLS AK/SK 写入记忆文件；测试阶段如需临时写配置，后续迁移到 Nacos/K8s Secret/流水线变量
 
 钉钉认证：
